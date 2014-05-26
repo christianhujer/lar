@@ -49,5 +49,8 @@ Some tools allow for only calling 1 other program.
 Which on UNIX is not a problem, you simply use a shell script.
 
 If those two things come together, you may need a solution for file locking which is built-in in the command.
+From that angle, `lar` shouldn't be seen as anything else but a shell script.
+Just that it's compiled and written in C instead.
+
 It might be the case that `lar` doesn't fit your problem, because it is specific to `ar`.
 In that case, you have the source, go ahead and modify it :)
