@@ -3,7 +3,16 @@
 # Licensed under LGPLv3.
 # See file LICENSE in the root directory of this project.
 
-export PREFIX?=/usr/local/
+PREFIX?=/usr/local/
+CFLAGS:=-std=gnu99 -W -Wall -pedantic -Werror -fdiagnostics-show-option -Wno-unused-parameter -g
 
-all clean distclean install:
-	$(MAKE) -C src $@
+.PHONY: all
+all: lar
+
+.PHONY: clean
+clean:
+	$(RM) lar
+
+.PHONY: install
+install: all
+	cp lar $(PREFIX)bin/
