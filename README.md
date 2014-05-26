@@ -10,10 +10,14 @@ This means, if another program (probably another instance of lar) attempts to lo
 
 Alternatives are:
 * Usage of flock, which in a Makefile can be done conventiently using
-    AR.saved:=$(AR)
-    AR=flock /var/lock/$*.lock $(AR.saved)
+```Makefile
+AR.saved:=$(AR)
+AR=flock /var/lock/$*.lock $(AR.saved)
+```
 
 * Usage of sflock, which has less features but for this case does exactly the same as flock.
   sflock is http://github.com/christianhujer/projects/sflock
-    AR.saved:=$(AR)
-    AR=sflock /var/lock/$*.lock $(AR.saved)
+```Makefile
+AR.saved:=$(AR)
+AR=sflock /var/lock/$*.lock $(AR.saved)
+```
