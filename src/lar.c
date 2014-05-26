@@ -1,17 +1,48 @@
-// Argl... why does this have to be so complicated.
-// What I really want is that ar becomes a monitor.
-// What I would like to have therefore is a mutex.
-// pthreads doesn't tell me if the mutex only works for the threads of the process, or globally.
-// C11 mutexes seem to only work for the threads within the same process.
-// So, right now considering to go for a binary semaphore instead, but XSI IPC *shiver* is so ugly.
-// Or should I use a file and file events like <sys/inotify.h>?
-// And what about portability, it shall run on Cygwin, too...
-// Or maybe (advisory, as we're the sole owner of the file) record locking?
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/file.h>
 
-int main(int argc, const char *argv[])
+const char *lockSuffix = ".lock";
+const char *archiveSuffix = ".a";
+const char *ar = "ar";
+
+bool endsWith(const char *string, const char *suffix)
 {
-    const char *lockFileName = getLockFileName(argv);
-    obtainLock(lockFileName);
-    invokeAr(argv);
-    releaseLock(lockFileName);
+    const char *hit = strstr(string, suffix);
+    return hit && (strlen(hit) == strlen(suffix));
+}
+
+char *strdupcat(const char *string1, const char *string2)
+{
+    size_t l1 = strlen(string1), l2 = strlen(string2);
+    char *string = malloc(l1 + l2 + 1);
+    memcpy(string, string1, l1);
+    memcpy(string + l1, string2, l2);
+    return string;
+}
+
+const char *getLockFileName(char *argv[])
+{
+    for (;*argv; argv++)
+        if (endsWith(*argv, archiveSuffix))
+            return strdupcat(*argv, lockSuffix);
+    return NULL;
+}
+
+void attemptLock(const char *lockFileName)
+{
+    if (lockFileName == NULL) return;
+    int fd = open(lockFileName, O_CREAT | O_WRONLY, 0666);
+    if (!fd || flock(fd, LOCK_EX)) perror(NULL);
+}
+
+int main(int argc, char *argv[])
+{
+    attemptLock(getLockFileName(argv));
+    argv[0]++; // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
+    execvp(argv[0], argv);
 }
