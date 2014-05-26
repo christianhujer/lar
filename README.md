@@ -35,13 +35,13 @@ You may wonder, is there need for `lar` besides `flock` and `sflock`?
 The simple answer is, in sane environments: no :)
 
 There are two aspects of some development environments that make them insane.
-1. Microsoft Windows
+# Microsoft Windows
     People shouldn't force developers to use Microsoft Windows for software development, at least not if the target platform isn't Microsoft Windows.
     However, in our industry there is so much (unintentional) sadism that this happens frequently enough.
     You can't simply run a shell script as a program on Microsoft Windows.
     You can, but you can't simply.
     You need to fiddle around with run.exe and bash.exe stuff and it gets complicated quickly.
-2. Other tools
+# Other tools
     Some tools allow for only calling 1 other program.
     Which on UNIX is not a problem, you simply use a shell script.
 
