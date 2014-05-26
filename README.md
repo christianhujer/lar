@@ -35,6 +35,7 @@ You may wonder, is there need for `lar` besides `flock` and `sflock`?
 The simple answer is, in sane environments: no :)
 
 There are two aspects of some development environments that make them insane.
+
 1. Microsoft Windows
 2. Other tools
 
