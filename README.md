@@ -9,6 +9,11 @@ It then locks the file in blocking mode.
 This means, if another program (probably another instance of lar) attempts to lock the file again, it will automatically wait until the previous lock is released.
 
 Alternatives are:
+* Usage of lar
+```Makefile
+AR:=lar
+```
+
 * Usage of flock, which in a Makefile can be done conventiently using
 ```Makefile
 AR.saved:=$(AR)
