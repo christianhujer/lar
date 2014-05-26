@@ -48,4 +48,5 @@ int main(int argc, char *argv[])
         fprintf(stderr, "%s: warning: Could not determine lock file name, continueing without lock.\n", argv[0]);
     argv[0]++; // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
     execvp(argv[0], argv);
+    perror(NULL);
 }
