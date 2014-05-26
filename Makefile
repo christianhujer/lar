@@ -5,17 +5,5 @@
 
 export PREFIX?=/usr/local/
 
-STEPS:=all clean
-DELEGATES:=src test
-
-define template
-$(1): $$(addsuffix +$(1),$(DELEGATES))
-ALL+=$$(addsuffix +$(1),$(DELEGATES))
-endef
-install: src+install
-
-$(foreach step,$(STEPS),$(eval $(call template,$(step))))
-
-.PHONY: $(ALL)
-$(ALL):
-	$(MAKE) -C $(subst +, ,$@)
+all clean distclean install:
+	$(MAKE) -C src $@
