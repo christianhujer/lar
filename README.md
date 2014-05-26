@@ -26,3 +26,5 @@ AR=flock /var/lock/$*.lock $(AR.saved)
 AR.saved:=$(AR)
 AR=sflock /var/lock/$*.lock $(AR.saved)
 ```
+
+For getting help on building, run `make help`.
