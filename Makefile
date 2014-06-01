@@ -21,7 +21,7 @@ all: $(PROGRAMNAME)
 .PHONY: clean
 ## Removes the generated files.
 clean:
-	$(RM) $(PROGRAMNAME)
+	$(RM) $(PROGRAMNAME) *.[ado]
 
 .PHONY: tags
 ## Creates a tags file.
