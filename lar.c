@@ -36,7 +36,8 @@ const char *getLockFileName(char *argv[])
 void attemptLock(const char *lockFileName)
 {
     int fd = open(lockFileName, O_CREAT | O_WRONLY, 0666);
-    if (!fd || flock(fd, LOCK_EX)) perror(NULL);
+    if (!fd || flock(fd, LOCK_EX))
+        perror(NULL);
 }
 
 int main(int argc, char *argv[])
