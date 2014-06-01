@@ -17,14 +17,14 @@ AR:=lar
 * Usage of `flock`, which in a `Makefile` can be done conventiently using
 ```Makefile
 AR.saved:=$(AR)
-AR=flock /var/lock/$*.lock $(AR.saved)
+AR=flock $*.lock $(AR.saved)
 ```
 
 * Usage of `sflock`, which has less features but for this case does exactly the same as flock.
   sflock is http://github.com/christianhujer/projects/sflock
 ```Makefile
 AR.saved:=$(AR)
-AR=sflock /var/lock/$*.lock $(AR.saved)
+AR=sflock $*.lock $(AR.saved)
 ```
 
 For getting help on building, run `make help`.
