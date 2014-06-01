@@ -1,6 +1,6 @@
 # Copyright (C) 2014 Christian Hujer.
 # All rights reserved.
-# Licensed under LGPLv3.
+# Licensed under GPLv3.
 # See file LICENSE in the root directory of this project.
 
 
@@ -9,16 +9,29 @@
 PREFIX?=/usr/local/
 help: export PREFIX:=$(PREFIX)
 
+CPPFLAGS:=-MMD
 CFLAGS:=-std=gnu99 -W -Wall -pedantic -Werror -fdiagnostics-show-option -Wno-unused-parameter -g
+
+PROGRAMNAME:=lar
 
 .PHONY: all
 ## Builds the program.
-all: lar
+all: $(PROGRAMNAME)
 
 .PHONY: clean
 ## Removes the generated files.
 clean:
-	$(RM) lar
+	$(RM) $(PROGRAMNAME)
+
+.PHONY: tags
+## Creates a tags file.
+tags: $(wildcard *.[ch])
+	ctags $^
+
+.PHONY: indent
+## Indents the source code.
+indent:
+	indent -npro -kr -nut -l1000 -c1 $(wildcard *.c)
 
 .PHONY: install
 ## Installs the program, building it first if not built already.
@@ -26,7 +39,7 @@ clean:
 # I.e. if PREFIX is /usr/local/, the program will be installed in /usr/local/bin/.
 # PREFIX is $(PREFIX), so the installation would be into $(PREFIX)/bin/
 install: all
-	cp lar $(PREFIX)/bin/
+	cp $(PROGRAMNAME) $(PREFIX)/bin/
 
 .PHONY: help
 ## Prints this help message.

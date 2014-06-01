@@ -27,7 +27,7 @@ char *strdupcat(const char *string1, const char *string2)
 
 const char *getLockFileName(char *argv[])
 {
-    for (;*argv; argv++)
+    for (; *argv; argv++)
         if (endsWith(*argv, archiveSuffix))
             return strdupcat(*argv, lockSuffix);
     return NULL;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
         attemptLock(lockFileName);
     else
         fprintf(stderr, "%s: warning: Could not determine lock file name, continueing without lock.\n", argv[0]);
-    argv[0]++; // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
+    argv[0]++;  // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
     execvp(argv[0], argv);
     perror(NULL);
 }

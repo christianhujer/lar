@@ -1,5 +1,8 @@
 *.[ado]
+*.a.lock
 *.exe
+*.swp
+*~
 lar
-lar.exe
 makehelp.pl
+tags
