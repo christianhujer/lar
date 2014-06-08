@@ -5,6 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/file.h>
+#include <err.h>
 
 const char *lockSuffix = ".lock";
 const char *archiveSuffix = ".a";
@@ -37,7 +38,7 @@ void attemptLock(const char *lockFileName)
 {
     int fd = open(lockFileName, O_CREAT | O_WRONLY, 0666);
     if (!fd || flock(fd, LOCK_EX))
-        perror(NULL);
+        err(EXIT_FAILURE, NULL);
 }
 
 int main(int argc, char *argv[])
@@ -49,5 +50,5 @@ int main(int argc, char *argv[])
         fprintf(stderr, "%s: warning: Could not determine lock file name, continueing without lock.\n", argv[0]);
     argv[0]++;  // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
     execvp(argv[0], argv);
-    perror(NULL);
+    err(EXIT_FAILURE, NULL);
 }
