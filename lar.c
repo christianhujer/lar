@@ -13,8 +13,8 @@ const char *ar = "ar";
 
 bool endsWith(const char *string, const char *suffix)
 {
-    const char *hit = strstr(string, suffix);
-    return hit && (strlen(hit) == strlen(suffix));
+    string += strlen(string) - strlen(suffix);
+    return strcmp(string, suffix) == 0;
 }
 
 char *strdupcat(const char *string1, const char *string2)

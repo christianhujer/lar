@@ -1,8 +1,9 @@
+*~
 *.[ado]
 *.a.lock
 *.exe
-*.swp
-*~
 lar
 makehelp.pl
+out
+*.swp
 tags

@@ -48,3 +48,14 @@ help: makehelp.pl
 
 makehelp.pl:
 	wget -N -q --no-check-certificate https://github.com/christianhujer/makehelp/raw/master/makehelp.pl
+
+out:
+	mkdir $@
+
+.PHONY: test
+test: ;
+
+.PHONY test: givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked
+givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked: $(PROGRAMNAME) | out
+	-PATH=. $(PROGRAMNAME) foo.a.a 2>out/$@.stderr >out/$@.stdout
+	! grep -q 'Could not determine lock file name, continueing without lock.' out/$@.stderr
