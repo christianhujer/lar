@@ -7,7 +7,12 @@
 ## Specifies the installation prefix (used by install).
 # Current value is: $(PREFIX)
 PREFIX?=/usr/local/
-help: export PREFIX:=$(PREFIX)
+help: export PREFIX:=$(value PREFIX)
+
+## Specifies the binary installation directory (used by install).
+# Current value is: $(BINDIR)
+BINDIR?=$(PREFIX)bin/
+help: export BINDIR:=$(value BINDIR)
 
 CPPFLAGS:=-MMD
 CFLAGS:=-std=gnu99 -W -Wall -pedantic -Werror -fdiagnostics-show-option -Wno-unused-parameter -g
@@ -35,11 +40,11 @@ indent:
 
 .PHONY: install
 ## Installs the program, building it first if not built already.
-# The program will be installed by copying it into the bin/ directory at the location specified by the PREFIX variable.
-# I.e. if PREFIX is /usr/local/, the program will be installed in /usr/local/bin/.
-# PREFIX is $(PREFIX), so the installation would be into $(PREFIX)/bin/
+# The program will be installed by copying it into the directory at the location specified by the BINDIR variable.
+# I.e. if BINDIR is /usr/local/bin/, the program will be installed in /usr/local/bin/.
+# BINDIR is $(BINDIR).
 install: all
-	cp $(PROGRAMNAME) $(PREFIX)/bin/
+	install -t $(BINDIR) $(PROGRAMNAME)
 
 out:
 	mkdir $@
