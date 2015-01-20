@@ -41,14 +41,6 @@ indent:
 install: all
 	cp $(PROGRAMNAME) $(PREFIX)/bin/
 
-.PHONY: help
-## Prints this help message.
-help: makehelp.pl
-	perl makehelp.pl $(MAKEFILE_LIST)
-
-makehelp.pl:
-	wget -N -q --no-check-certificate https://github.com/christianhujer/makehelp/raw/master/makehelp.pl
-
 out:
 	mkdir $@
 
@@ -59,3 +51,5 @@ test: ;
 givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked: $(PROGRAMNAME) | out
 	-PATH=. $(PROGRAMNAME) foo.a.a 2>out/$@.stderr >out/$@.stdout
 	! grep -q 'Could not determine lock file name, continueing without lock.' out/$@.stderr
+
+-include Help.mak
