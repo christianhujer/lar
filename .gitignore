@@ -4,7 +4,6 @@
 *.exe
 .help.mak
 lar
-makehelp.pl
 out
 *.swp
 tags
