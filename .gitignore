@@ -2,6 +2,7 @@
 *.[ado]
 *.a.lock
 *.exe
+.help.mak
 lar
 makehelp.pl
 out

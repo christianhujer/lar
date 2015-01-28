@@ -5,14 +5,10 @@
 
 
 ## Specifies the installation prefix (used by install).
-# Current value is: $(PREFIX)
 PREFIX?=/usr/local/
-help: export PREFIX:=$(value PREFIX)
 
 ## Specifies the binary installation directory (used by install).
-# Current value is: $(BINDIR)
 BINDIR?=$(PREFIX)bin/
-help: export BINDIR:=$(value BINDIR)
 
 CPPFLAGS:=-MMD
 CFLAGS:=-std=gnu99 -W -Wall -pedantic -Werror -fdiagnostics-show-option -Wno-unused-parameter -g
@@ -57,4 +53,7 @@ givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked: $(PROGRAMNAME) 
 	-PATH=. $(PROGRAMNAME) foo.a.a 2>out/$@.stderr >out/$@.stdout
 	! grep -q 'Could not determine lock file name, continueing without lock.' out/$@.stderr
 
--include Help.mak
+-include makehelp/Help.mak
+
+debug:
+	echo $(MAKEFILE_LIST)
