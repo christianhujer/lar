@@ -54,10 +54,7 @@ givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked: $(PROGRAMNAME) 
 	-PATH=. $(PROGRAMNAME) foo.a.a 2>out/$@.stderr >out/$@.stdout
 	! grep -q 'Could not determine lock file name, continueing without lock.' out/$@.stderr
 
--include makehelp/Help.mak
-
 control.Description=lar - a wrapper for ar which locks the archive file.
 -include makedist/MakeDist.mak
 
-debug:
-	echo $(MAKEFILE_LIST)
+-include makehelp/Help.mak
