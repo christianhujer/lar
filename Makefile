@@ -40,6 +40,7 @@ indent:
 # I.e. if BINDIR is /usr/local/bin/, the program will be installed in /usr/local/bin/.
 # BINDIR is $(BINDIR).
 install: all
+	install -d $(BINDIR)
 	install -t $(BINDIR) $(PROGRAMNAME)
 
 out:
@@ -54,6 +55,9 @@ givenFilenameWithDoubleASuffix_whenLarFilename_thenFileIsLocked: $(PROGRAMNAME) 
 	! grep -q 'Could not determine lock file name, continueing without lock.' out/$@.stderr
 
 -include makehelp/Help.mak
+
+control.Description=lar - a wrapper for ar which locks the archive file.
+-include makedist/MakeDist.mak
 
 debug:
 	echo $(MAKEFILE_LIST)
