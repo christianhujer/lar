@@ -10,6 +10,9 @@ PREFIX?=/usr/local/
 ## Specifies the binary installation directory (used by install).
 BINDIR?=$(PREFIX)bin/
 
+## Installation directory for man files.
+MANDIR=$(PREFIX)/share/man/
+
 CPPFLAGS:=-MMD
 CFLAGS:=-std=gnu99 -W -Wall -pedantic -Werror -fdiagnostics-show-option -Wno-unused-parameter -g
 
@@ -40,8 +43,9 @@ indent:
 # I.e. if BINDIR is /usr/local/bin/, the program will be installed in /usr/local/bin/.
 # BINDIR is $(BINDIR).
 install: all
-	install -d $(BINDIR)
+	install -d $(BINDIR) $(MANDIR)/man1/
 	install -t $(BINDIR) $(PROGRAMNAME)
+	install -m 0644 -t $(MANDIR)/man1/ man/makehelp.1
 
 out:
 	mkdir $@
