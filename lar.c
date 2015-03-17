@@ -1,23 +1,22 @@
+#include <err.h>
+#include <fcntl.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/file.h>
-#include <err.h>
+#include <unistd.h>
 
-const char *lockSuffix = ".lock";
-const char *archiveSuffix = ".a";
-const char *ar = "ar";
+static const char *lockSuffix = ".lock";
+static const char *archiveSuffix = ".a";
 
-bool endsWith(const char *string, const char *suffix)
+static bool endsWith(const char *string, const char *suffix)
 {
     string += strlen(string) - strlen(suffix);
     return strcmp(string, suffix) == 0;
 }
 
-char *strdupcat(const char *string1, const char *string2)
+static char *strdupcat(const char *string1, const char *string2)
 {
     size_t l1 = strlen(string1), l2 = strlen(string2);
     char *string = malloc(l1 + l2 + 1);
@@ -26,15 +25,23 @@ char *strdupcat(const char *string1, const char *string2)
     return string;
 }
 
-const char *getLockFileName(char *argv[])
+static const char *getArchiveFileName(char *argv[])
 {
     for (; *argv; argv++)
         if (endsWith(*argv, archiveSuffix))
-            return strdupcat(*argv, lockSuffix);
+            return *argv;
     return NULL;
 }
 
-void attemptLock(const char *lockFileName)
+static const char *getLockFileName(char *argv[])
+{
+    const char *archiveFileName = getArchiveFileName(argv);
+    if (archiveFileName)
+        return strdupcat(archiveFileName, lockSuffix);
+    return NULL;
+}
+
+static void attemptLock(const char *lockFileName)
 {
     int fd = open(lockFileName, O_CREAT | O_WRONLY, 0666);
     if (!fd || flock(fd, LOCK_EX))
