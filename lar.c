@@ -48,21 +48,13 @@ static void attemptLock(const char *lockFileName)
         err(EXIT_FAILURE, NULL);
 }
 
-char *getProgramname(char *progname)
-{
-    char *slash = rindex(progname, '/');
-    if (slash != NULL)
-        progname = slash + 1;
-    return progname;
-}
-
 int main(int argc, char *argv[])
 {
     const char *lockFileName = getLockFileName(argv);
     if (lockFileName)
         attemptLock(lockFileName);
     else
-        fprintf(stderr, "%s: warning: Could not determine lock file name, continueing without lock.\n", getProgramname(argv[0]));
+        warnx("warning: Could not determine lock file name, continueing without lock.");
     argv[0]++;  // lar -> ar, skip l prefix. That allows users to create hardlinks to other librarians, too.
     execvp(argv[0], argv);
     err(EXIT_FAILURE, NULL);
