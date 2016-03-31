@@ -6,7 +6,8 @@ lar \- lock archive and run ar.
 [\fIOPTION\fR]... \fIarchive\fR [\fImember\fR]...
 .SH DESCRIPTION
 .B lar
-locks the \fIarchive\fR and executes \fIar\fR with \fIOPTION\fRs, \fIarchive\fR and \fImember\fRs.
+locks the lock file for \fIarchive\fR and executes \fIar\fR with \fIOPTION\fRs, \fIarchive\fR and \fImember\fRs.
+The name of the lock file is created by removing a \fB.a\fR suffix from \fIarchive\fR if present, and appending a \fB.lock\fR suffix.
 .SH AUTHOR
 Written by Christian Hujer.
 .SH REPORTING BUGS
